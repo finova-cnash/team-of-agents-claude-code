@@ -75,6 +75,8 @@ For trivial tasks where compact format adds no value, begin response with `[COMP
 
 ## Part 2 — TRANSLATE Spec (for the primary agent)
 
+**Scope of Part 2:** The failure handling and compliance scoring in this part apply only to subagents whose agent definition instructs them to write in compact format. Subagents that reply in plain English by design are correct as-is — pass their responses through as normal English with no failure warning or compliance tracking. If unsure whether an agent uses compact format, check the primary agent's instructions, then the agent's definition, before treating an untagged response as a failure.
+
 ### Tag Mapping
 
 Subagent responses arrive as tagged blocks. Translate each tag as follows:
@@ -113,7 +115,7 @@ Subagent responses arrive as tagged blocks. Translate each tag as follows:
 
 ### Translation Failure
 
-If a subagent response does not conform to the parseable tag format:
+This section applies only to subagents that use compact format. If a compact-format subagent response does not conform to the parseable tag format:
 
 1. Attempt to detect partial tags (lines starting with uppercase letters followed by colon).
 2. If partial parsing succeeds, extract what you can and flag the unparseable remainder.
@@ -129,7 +131,7 @@ If a subagent response does not conform to the parseable tag format:
 
 ### Compliance Scoring
 
-Track the following for each subagent response:
+For compact-format subagents only, track the following for each response:
 
 - `agent`: subagent name
 - `model`: model identifier (from model config)
@@ -137,7 +139,7 @@ Track the following for each subagent response:
 - `tag_count`: number of tags found
 - `token_count`: approximate output token count
 
-This data is reported in the primary agent's response text to the user (e.g., a compliance summary at the end of the response). The primary agent cannot write to files directly — if the user wants compliance data logged to a file, the primary agent MUST delegate that write operation to a subagent via a routing instruction.
+Track this data internally. Report to user only upon compliance failure (agent did not conform, or response was malformed or unparseable, etc): state agent name, what went wrong, and how it was handled in one or two lines.
 
 ### Token Accounting (Optional)
 

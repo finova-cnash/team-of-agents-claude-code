@@ -100,7 +100,7 @@ Review these in context; they may express a necessary logical relationship or em
 
 ## False Precision Ranges
 
-Review "anywhere from X to Y" when a verified approximate value would suffice. Keep genuine ranges and uncertainty intact; use a narrower estimate only if the source supports it. For example, "anywhere from 5 to 10 years" can become "5-10 years", not an unsupported "about 7 years".
+Review "anywhere from X to Y" when a verified approximate value would suffice. Keep genuine ranges and uncertainty intact; use a narrower estimate only if the source supports it. For example, "anywhere from 5 to 10 years" can become "5 to 10 years", not an unsupported "about 7 years".
 
 **Fix:** Be specific where evidence permits; preserve existing uncertainty without adding doubt or false precision.
 

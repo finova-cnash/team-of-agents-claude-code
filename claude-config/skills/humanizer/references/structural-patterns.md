@@ -151,7 +151,7 @@ Retain efficiency, productivity, and performance when they denote distinct outco
 > "The project took anywhere from 3 to 9 months, depending on various factors."
 
 **After:**
-> "The project took 3-9 months, depending on the circumstances."
+> "The project took 3 to 9 months, depending on the circumstances."
 
 Preserve the supplied range unless a source supports a single estimate.
 

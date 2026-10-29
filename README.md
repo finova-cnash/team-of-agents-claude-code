@@ -1,5 +1,9 @@
 # Team of Agents
 
+A Claude Code setup that brings together specialist agents and skills to plan, build, review, and document your work.
+
+![Team of Agents](img/team-of-agents-animated.gif)
+
 ### Claude Code Setup
 
 Copy the files in the `claude-config` folder into user profile `.claude` folder.

@@ -1,6 +1,6 @@
 ---
 name: refine-skill
-description: "Audits and refactors an existing SKILL.md for bloat, weak triggers, and missing progressive disclosure, then rewrites it in place. Use when the user asks to refine, improve, tighten, clean up, or review an existing skill, or reports that a skill isn't being loaded when it should be."
+description: "Audits and refactors an existing SKILL.md for bloat, weak triggers, and missing progressive disclosure, then rewrites it in place and verifies the rewrite against the original. Use when the user asks to refine, improve, tighten, clean up, or review an existing skill, or reports that a skill isn't being loaded when it should be."
 ---
 
 # Refine Skill
@@ -9,6 +9,8 @@ Take an existing `<skill-name>/SKILL.md` and rewrite it to be leaner, more relia
 
 ### Locate and Read First
 Find the target skill's directory. Read the full `SKILL.md` plus anything in its `references/`, `scripts/`, or `assets/` subdirectories before touching it — you need the whole picture, not just the frontmatter.
+
+Before editing, copy the whole skill directory (`SKILL.md` and any `references/`, `scripts/`, `assets/`) to a scratch or temp location, preserving it exactly as it stands now, including uncommitted changes. Do not use git `HEAD` as the baseline unless the skill's working tree is clean. This snapshot is the baseline for verification. Skip this if the user asked for a review only.
 
 ### Audit Checklist
 Apply each check; fix in place as you go rather than producing a separate report unless the user asked for a review only.
@@ -27,5 +29,13 @@ If a strong model would make the right call without a line of prompt text, delet
 ### Preserve, Don't Regress
 Never drop project-specific facts, file paths, environment quirks, or hard-won constraints (e.g. "always use `references/`, never inline API specs") while trimming prose around them. When unsure whether a line is load-bearing, keep it and tighten the wording instead of deleting it.
 
+### Verify Against the Original
+Skip if the user asked for a review only. Otherwise compare the snapshot with the revised files. Prefer an independent read-only reviewer (e.g. a subagent) given both versions and the criteria below, rather than your own conclusions; if none is available, do it yourself.
+
+- **Concept coverage**: Walk the original line by line. Every instruction, threshold, field, file or section name, step, ordering, edge case and constraint must appear verbatim or equivalently in the revised `SKILL.md` or its subdirectory files, or be a deliberate cut that will be listed in the report.
+- **Behavioural equivalence**: Would a capable agent following the revised skill do effectively the same as with the original? Check that moved content is still reached (the core file says when to read each reference file and what to do with it, e.g. paste it into a delegation rather than pass a path), that content meant for delegated agents still reaches them, that phase order, gating and approval points are unchanged, and that the restructure introduced no contradictions (e.g. a rule now addressed to the wrong role, or a detail moved out of reach of the agent that needs it).
+
+Fix every gap found, then re-check. Repeat until nothing is missing.
+
 ### Report the Diff
-After rewriting, summarize what changed in a few lines: what was cut, what moved to subdirectories, what the description now says, and any judgment call the user should sanity-check. Don't reproduce the whole file in chat unless asked.
+After rewriting, summarize what changed in a few lines: what was cut, what moved to subdirectories, what the description now says, and any judgment call the user should sanity-check. Include the verification result: any deliberate cuts and why, and any remaining behavioural difference the user should know about. Don't reproduce the whole file in chat unless asked.
